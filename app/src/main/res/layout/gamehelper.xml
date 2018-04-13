@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="  本游戏可选择默认的9个图片或玩家自行添加图片进行游戏，同时可选择3x3,4x4,5x5三种不同难度以及简易和经典两种模式，
+        简易模式下进入游戏后玩家点击任意两块拼图，他们的位置将会互换，经典模式下则只能点击空白格附近的拼图，当玩家拼好后可点击提交，若成功则返回图片选择页面，否则将提示不成功。"
+        android:textSize="30sp"
+        android:textColor="#8DEEEE"/>
+
+</LinearLayout>

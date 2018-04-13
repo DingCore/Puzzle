@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/menu_bg">
+
+    <LinearLayout
+        android:id="@+id/puzzle_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="选择难度："
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/type_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="3 X 3"
+            android:textSize="30sp"
+            android:onClick="popupwindow"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/puzzle_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/puzzle_difficulty"
+        android:layout_margin="10dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="选择模式："
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/mode_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="简便模式"
+            android:textSize="30sp"
+            android:onClick="modeselecter"/>
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/puzzle_pic_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/puzzle_mode"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:padding="10dp"
+        android:verticalSpacing="10dp" >
+    </GridView>
+    
+</RelativeLayout>
