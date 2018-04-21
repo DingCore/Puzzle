@@ -5,11 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.view.View;
-import android.widget.ImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.io.FileNotFoundException;
@@ -24,6 +24,7 @@ import java.util.List;
  */
 
 public class PuzzleLayout extends RelativeLayout implements OnClickListener {
+
     private int column = 3;
     private int width;
     private int padding;
@@ -35,6 +36,7 @@ public class PuzzleLayout extends RelativeLayout implements OnClickListener {
     private boolean once;
     private ImageView first;
     private ImageView second;
+
     public PuzzleLayout(Context context){
         this(context,null);
     }
@@ -162,7 +164,6 @@ public class PuzzleLayout extends RelativeLayout implements OnClickListener {
             }
             if(isSuccess){
                 isGameSuccess = true;
-                itemBitmaps.clear();
             }
         }
         return isGameSuccess;
@@ -170,6 +171,11 @@ public class PuzzleLayout extends RelativeLayout implements OnClickListener {
     private int getImageIndexByTag(String tag){
         String[] s = tag.split("_");
         return Integer.parseInt(s[1]);
+    }
+
+    public void cleanConfig() {
+        itemBitmaps.clear();
+        bitmap = null;
     }
 
 }

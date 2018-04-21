@@ -4,13 +4,37 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <LinearLayout
+        android:id="@+id/puzzle_timer_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="已用时间："
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/timer_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
     <com.example.dingcore.puzzle.PuzzleLayout2
         android:id="@+id/id_gameview2"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/puzzle_timer_2"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:padding="5dp">
     </com.example.dingcore.puzzle.PuzzleLayout2>
 
@@ -19,8 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_gameview2"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="原图预览"
         android:textSize="30sp"
         android:textColor="#FF7F00"
@@ -31,8 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/preview_2"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="确认提交"
         android:textSize="30sp"
         android:textColor="#FF7F00"

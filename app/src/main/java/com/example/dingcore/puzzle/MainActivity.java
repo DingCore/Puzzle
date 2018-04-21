@@ -30,8 +30,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button button2 = (Button) findViewById(R.id.button_help);
+        Button button2 = (Button) findViewById(R.id.button_leaderboard);
         button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,LeaderboardActivity.class);
+                startActivity(intent);
+            }
+        });
+        Button button3 = (Button) findViewById(R.id.button_help);
+        button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -39,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 popupShow(v);
             }
         });
-        Button button3 = (Button) findViewById(R.id.button_quit);
-        button3.setOnClickListener(new View.OnClickListener() {
+        Button button4 = (Button) findViewById(R.id.button_quit);
+        button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

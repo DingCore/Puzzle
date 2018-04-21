@@ -9,7 +9,7 @@
         android:id="@+id/text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
         android:textSize="70sp"
@@ -26,6 +26,16 @@
         android:background="@drawable/menu_button"
         android:text="开始游戏"/>
     <Button
+        android:id="@+id/button_leaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="30sp"
+        android:background="@drawable/menu_button"
+        android:text="最高分"/>
+    <Button
         android:id="@+id/button_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +45,6 @@
         android:textSize="30sp"
         android:background="@drawable/menu_button"
         android:text="游戏帮助"/>
-
     <Button
         android:id="@+id/button_quit"
         android:layout_width="wrap_content"

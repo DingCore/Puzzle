@@ -3,6 +3,8 @@ package com.example.dingcore.puzzle;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,12 +15,37 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game2Activity extends AppCompatActivity {
 
+    private PuzzleLayout2 puzzleLayout;
     private PopupWindow popupWindow;
     private View popupView;
+    private TextView tv_Timer;
+    private Timer timer;
+    private static int timerIndex = 0;
+    private TimerTask timerTask;
+
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    timerIndex++;
+                    tv_Timer.setText(timerIndex + "秒");
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +59,8 @@ public class Game2Activity extends AppCompatActivity {
         if(photoPath != null) {
             imageUri = Uri.parse(photoPath);
         }
-        int type = intent.getExtras().getInt("type",3);
-        final PuzzleLayout2 puzzleLayout = (PuzzleLayout2) findViewById(R.id.id_gameview2);
+        final int type = intent.getExtras().getInt("type",3);
+        puzzleLayout = (PuzzleLayout2) findViewById(R.id.id_gameview2);
         if (id != 0) {
             puzzleLayout.setBitmap(id);
         } else if (imagePath != null){
@@ -42,12 +69,44 @@ public class Game2Activity extends AppCompatActivity {
             puzzleLayout.setBitmap(imageUri);
         }
         puzzleLayout.setColumn(type);
+        tv_Timer = (TextView) findViewById(R.id.timer_2);
+        tv_Timer.setText("0秒");
+        timer = new Timer(true);
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                msg.what = 1;
+                handler.sendMessage(msg);
+            }
+        };
+        //每1000ms执行 延迟0s
+        timer.schedule(timerTask,0,1000);
         Button check = (Button) findViewById(R.id.check_success_2);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (puzzleLayout.checkSucess()) {
                     Toast.makeText(Game2Activity.this, "恭喜！游戏成功！", Toast.LENGTH_SHORT).show();
+                    timer.cancel();
+                    timerTask.cancel();
+                    List<Score> scores = DataSupport.where("type = ? and mode = ?",String.valueOf(type),"2").find(Score.class);
+                    if (scores.size() != 0) {
+                        int time = scores.get(0).getTime();
+                        if (time != 0 && time > timerIndex) {
+                            Score score = new Score();
+                            score.setTime(timerIndex);
+                            score.updateAll("type = ? and mode = ?", String.valueOf(type), "2");
+                        }
+                    } else {
+                        Score score = new Score();
+                        score.setType(type);
+                        score.setMode(2);
+                        score.setTime(timerIndex);
+                        score.save();
+                    }
+                    timerIndex = 0;
+                    puzzleLayout.cleanConfig();
                     finish();
                 } else {
                     Toast.makeText(Game2Activity.this, "对不起，请继续努力！", Toast.LENGTH_SHORT).show();
@@ -86,5 +145,14 @@ public class Game2Activity extends AppCompatActivity {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha;
         getWindow().setAttributes(lp);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        timer.cancel();
+        timerTask.cancel();
+        timerIndex = 0;
+        puzzleLayout.cleanConfig();
     }
 }

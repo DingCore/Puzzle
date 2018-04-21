@@ -192,7 +192,6 @@ public class PuzzleLayout2 extends RelativeLayout implements View.OnClickListene
             }
             if(isSuccess){
                 isGameSuccess = true;
-                itemBitmaps.clear();
             }
         }
         return isGameSuccess;
@@ -233,5 +232,10 @@ public class PuzzleLayout2 extends RelativeLayout implements View.OnClickListene
             inversionCount = 0;
         }
         return inversions;
+    }
+
+    public void cleanConfig() {
+        itemBitmaps.clear();
+        bitmap = null;
     }
 }
