@@ -46,7 +46,7 @@ public class GridPicListAdapter extends BaseAdapter {
         if(convertView == null) {
             pic_item = new ImageView(context);
             pic_item.setLayoutParams(new GridView.LayoutParams(200,300)); //设置布局图片
-            pic_item.setScaleType(ImageView.ScaleType.FIT_XY);  //设置显示比例类型
+            pic_item.setScaleType(ImageView.ScaleType.FIT_XY);  //不按比例，将图片塞满
         } else {
             pic_item = (ImageView) convertView;
         }

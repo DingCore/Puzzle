@@ -3,6 +3,8 @@ package com.example.dingcore.puzzle;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -36,6 +38,9 @@ public class PuzzleLayout2 extends RelativeLayout implements View.OnClickListene
     private ImageView click;
     private ImageView blank;
     private int blankId;
+    private SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC,5);
+    private int music = sp.load(getContext(),R.raw.click,1);
+    private CallBack callBack;
 
     public PuzzleLayout2(Context context){
         this(context,null);
@@ -52,6 +57,10 @@ public class PuzzleLayout2 extends RelativeLayout implements View.OnClickListene
         int[] arr = {a,b,c,d};
         Arrays.sort(arr);
         return arr[0];
+    }
+
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
     }
 
     public void setColumn(int column) {
@@ -151,10 +160,14 @@ public class PuzzleLayout2 extends RelativeLayout implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        sp.play(music,1,1,0,0,1);
         click = (ImageView) v;
         int position = v.getId();
         if (isMoveable(position)) {
             exchangeView();
+            if (callBack != null) {
+                callBack.postExec();
+            }
         }
     }
 
@@ -183,18 +196,19 @@ public class PuzzleLayout2 extends RelativeLayout implements View.OnClickListene
     }
 
     public boolean checkSucess(){
-        boolean isGameSuccess = false;
-        boolean isSuccess = true;
-        for(int i=0;i<puzzleItems.length;i++){
+        boolean isSuccess = false;
+        boolean flag = true;
+        for (int i = 0;i < puzzleItems.length;i++){
             ImageView imageView = puzzleItems[i];
-            if(getImageIndexByTag((String) imageView.getTag()) != i){
-                isSuccess = false;
-            }
-            if(isSuccess){
-                isGameSuccess = true;
+            if (getImageIndexByTag((String) imageView.getTag()) != i){
+                flag = false;
+                break;
             }
         }
-        return isGameSuccess;
+        if (flag){
+            isSuccess = true;
+        }
+        return isSuccess;
     }
 
     private int getImageIndexByTag(String tag){

@@ -2,6 +2,8 @@ package com.example.dingcore.puzzle;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -29,11 +31,14 @@ public class Game2Activity extends AppCompatActivity {
     private PuzzleLayout2 puzzleLayout;
     private PopupWindow popupWindow;
     private View popupView;
+    private TextView steps;
     private TextView tv_Timer;
     private Timer timer;
     private static int timerIndex = 0;
+    private static int stepIndex = 0;
     private TimerTask timerTask;
-
+    private SoundPool sp;
+    private int music;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -51,6 +56,8 @@ public class Game2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
+        sp = new SoundPool(10, AudioManager.STREAM_MUSIC,5);
+        music = sp.load(this,R.raw.click,1);
         Intent intent = getIntent();
         int id = intent.getExtras().getInt("picChooseId");
         String imagePath = intent.getExtras().getString("picPath");
@@ -82,10 +89,20 @@ public class Game2Activity extends AppCompatActivity {
         };
         //每1000ms执行 延迟0s
         timer.schedule(timerTask,0,1000);
+        steps = (TextView) findViewById(R.id.steps_2);
+        steps.setText("0步");
+        puzzleLayout.setCallBack(new CallBack() {
+            @Override
+            public void postExec() {
+                stepIndex++;
+                steps.setText(stepIndex + "步");
+            }
+        });
         Button check = (Button) findViewById(R.id.check_success_2);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sp.play(music,1,1,0,0,1);
                 if (puzzleLayout.checkSucess()) {
                     Toast.makeText(Game2Activity.this, "恭喜！游戏成功！", Toast.LENGTH_SHORT).show();
                     timer.cancel();
@@ -93,9 +110,11 @@ public class Game2Activity extends AppCompatActivity {
                     List<Score> scores = DataSupport.where("type = ? and mode = ?",String.valueOf(type),"2").find(Score.class);
                     if (scores.size() != 0) {
                         int time = scores.get(0).getTime();
-                        if (time != 0 && time > timerIndex) {
+                        int step = scores.get(0).getSteps();
+                        if (time != 0 && step != 0 && (time + step) > (timerIndex + stepIndex)) {
                             Score score = new Score();
                             score.setTime(timerIndex);
+                            score.setSteps(stepIndex);
                             score.updateAll("type = ? and mode = ?", String.valueOf(type), "2");
                         }
                     } else {
@@ -103,9 +122,11 @@ public class Game2Activity extends AppCompatActivity {
                         score.setType(type);
                         score.setMode(2);
                         score.setTime(timerIndex);
+                        score.setSteps(stepIndex);
                         score.save();
                     }
                     timerIndex = 0;
+                    stepIndex = 0;
                     puzzleLayout.cleanConfig();
                     finish();
                 } else {
@@ -117,6 +138,7 @@ public class Game2Activity extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sp.play(music,1,1,0,0,1);
                 LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 popupView = layoutInflater.inflate(R.layout.imagepreview,null);
                 ImageView imageView = (ImageView) popupView.findViewById(R.id.image_preview);
@@ -153,6 +175,7 @@ public class Game2Activity extends AppCompatActivity {
         timer.cancel();
         timerTask.cancel();
         timerIndex = 0;
+        stepIndex = 0;
         puzzleLayout.cleanConfig();
     }
 }

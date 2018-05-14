@@ -13,18 +13,36 @@
         android:layout_margin="10dip">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center"
-            android:text="已用时间："
-            android:textSize="30sp" />
+            android:text="步数："
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/steps_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="时间："
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/timer_2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

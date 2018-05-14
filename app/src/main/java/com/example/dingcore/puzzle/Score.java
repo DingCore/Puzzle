@@ -11,6 +11,7 @@ public class Score extends DataSupport {
     private int type;
     private int mode;
     private int time;
+    private int steps;
 
     public int getType() {
         return type;
@@ -36,12 +37,21 @@ public class Score extends DataSupport {
         this.time = time;
     }
 
+    public int getSteps() {
+        return steps;
+    }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
+    }
+
     @Override
     public String toString() {
         return "Score{" +
                 "type=" + type +
                 ", mode=" + mode +
                 ", time=" + time +
+                ", steps=" + steps +
                 '}';
     }
 }

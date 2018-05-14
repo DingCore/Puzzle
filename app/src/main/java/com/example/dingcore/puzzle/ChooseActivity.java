@@ -13,6 +13,8 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -63,17 +65,22 @@ public class ChooseActivity extends AppCompatActivity implements View.OnClickLis
     private int type = 3;
     private int mode = 1;
     private String[] customItems = new String[]{"本地图册","相机拍照"};
+    private SoundPool sp;
+    private int music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
+        sp = new SoundPool(10, AudioManager.STREAM_MUSIC,5);
+        music = sp.load(this,R.raw.click,1);
         picList = new ArrayList<Bitmap>();
         initViews();
         pic_List.setAdapter(new GridPicListAdapter(ChooseActivity.this,picList));
         pic_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                sp.play(music,1,1,0,0,1);
                 if(position == resPicId.length - 1) {
                     showDialogCustom();
                 } else {
@@ -96,6 +103,7 @@ public class ChooseActivity extends AppCompatActivity implements View.OnClickLis
         typeChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sp.play(music,1,1,0,0,1);
                 popupShow(v);
             }
         });
@@ -103,6 +111,7 @@ public class ChooseActivity extends AppCompatActivity implements View.OnClickLis
         modeChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sp.play(music,1,1,0,0,1);
                 popupShow2(v);
             }
         });

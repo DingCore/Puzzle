@@ -162,4 +162,15 @@
             android:textSize="30sp"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/clear_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="重置数据"
+        android:textSize="30sp"
+        android:textColor="#FF7F00"
+        android:background="@drawable/choose_button"/>
+
 </LinearLayout>
